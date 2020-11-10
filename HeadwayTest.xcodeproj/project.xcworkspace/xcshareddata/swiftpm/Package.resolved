@@ -1,0 +1,61 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Nuke",
+        "repositoryURL": "https://github.com/kean/Nuke",
+        "state": {
+          "branch": null,
+          "revision": "a2a56211cd80614e1ac90bf2e76c5329f4f6b3d0",
+          "version": "9.1.2"
+        }
+      },
+      {
+        "package": "RxDataSources",
+        "repositoryURL": "https://github.com/RxSwiftCommunity/RxDataSources.git",
+        "state": {
+          "branch": null,
+          "revision": "a18cee01c9ee55f04d0c7eb15c77a96c3648c88e",
+          "version": "4.0.1"
+        }
+      },
+      {
+        "package": "RxExpect",
+        "repositoryURL": "https://github.com/devxoul/RxExpect.git",
+        "state": {
+          "branch": null,
+          "revision": "c3a3bb3d46ee831582c6619ecc48cda1cdbff890",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "RxSwift",
+        "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "002d325b0bdee94e7882e1114af5ff4fe1e96afa",
+          "version": "5.1.1"
+        }
+      },
+      {
+        "package": "RxSwiftExt",
+        "repositoryURL": "https://github.com/RxSwiftCommunity/RxSwiftExt",
+        "state": {
+          "branch": null,
+          "revision": "9620cd55a58c1cf3370375140c45379c40049f55",
+          "version": "5.2.0"
+        }
+      },
+      {
+        "package": "RxViewController",
+        "repositoryURL": "https://github.com/devxoul/RxViewController.git",
+        "state": {
+          "branch": null,
+          "revision": "2974fc02742497ee26ba3622ced199818d580444",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
