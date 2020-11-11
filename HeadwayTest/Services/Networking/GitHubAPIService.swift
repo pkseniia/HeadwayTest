@@ -1,5 +1,5 @@
 //
-//  GitHubAPI.swift
+//  GitHubAPIService.swift
 //  HeadwayTest
 //
 //  Created by Kseniia Poternak on 10.11.2020.
@@ -21,37 +21,55 @@ protocol GitHubAPIProvider: GitHubAPILoginProvider, GitHubAPIRepositoryProvider 
 
 final class GitHubAPIService: GitHubAPIProvider {
     
-    private let httpClient: HTTPClientProvider
-    private let storage: UserDefaultsStorageProtocol
+    private let storage: APIStorage
     
     init() {
-        self.httpClient = HTTPClient()
         self.storage = UserDefaultsStorage()
     }
     
+    func performRequest(api: GitHubAPI) -> Observable<Data?> {
+        guard let url = api.url else { return Observable.empty() }
+        var request = URLRequest(url: url)
+        request.httpMethod = api.httpMethod
+        let headers = api.headers
+        headers?.forEach {
+            request.addValue($0.value, forHTTPHeaderField: $0.key)
+        }
+        request.httpBody = api.body
+        return URLSession.shared.rx.data(request: request)
+            .map { Optional.init($0) }
+            .catchError { (error) -> Observable<Data?> in
+                throw error
+            }
+    }
+}
+
+extension GitHubAPIService: GitHubAPILoginProvider {
+    
     func login(username: String, password: String) -> Observable<Bool> {
-        let credentialData = "\(username):\(password)".data(using: String.Encoding.utf8)!
-        let base64Credentials = credentialData.base64EncodedString(options: [])
+        let api: GitHubAPI = .login(model: UserInput(name: username, pass: password))
         
-        
-        return httpClient.post(url: "https://api.github.com/authorizations",
-                               params: ["scopes": ["repo", "read:user"], "note": ["test"], "fingerprint": ["\(UUID().uuidString)"]],
-                               base64Credentials: base64Credentials)
+        return performRequest(api: api)
             .map { (data) -> Bool in
                 guard let data = data,
                       let response = try? JSONDecoder().decode(AuthTokenEntity.self, from: data) else {
                     return false
                 }
-                self.storage.saveToken(response.token ?? "", key: .token)
+                self.storage.token = response.token
                 return true
             }
             .catchError { (error) in
                 throw error
             }
     }
+}
+
+extension GitHubAPIService: GitHubAPIRepositoryProvider {
     
     func searchRepositories(for query: String, page: Int) -> Observable<[RepositoryEntity]?> {
-        return httpClient.get(url: "https://api.github.com/search/repositories?q=\(query)&sort=stars&page=\(page)", token: storage.getToken(key: .token) ?? "")
+        guard let token = storage.token else { return .empty() }
+        let api: GitHubAPI = .search(model: SearchInput(query: query, page: page, token: token))
+        return performRequest(api: api)
             .map { (data) -> [RepositoryEntity]? in
                 guard let data = data,
                       let response = try? JSONDecoder().decode(RepositoriesSearchResult.self, from: data) else {
@@ -62,6 +80,9 @@ final class GitHubAPIService: GitHubAPIProvider {
             .map { (repositories) -> [RepositoryEntity]? in
                 return repositories
             }
+            .catchError { (error) in
+                throw error
+            }
     }
 }
 
@@ -70,6 +91,3 @@ extension GitHubAPIService: StaticFactory {
         static let build: GitHubAPIProvider = GitHubAPIService()
     }
 }
-
-
-

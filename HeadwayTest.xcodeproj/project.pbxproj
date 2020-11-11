@@ -13,7 +13,6 @@
 		360D54B2255A9140006945FA /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D54B1255A9140006945FA /* Storyboarded.swift */; };
 		360D54B5255A925A006945FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 360D54B4255A925A006945FA /* Main.storyboard */; };
 		360D54B9255A9AD3006945FA /* AuthTokenEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D54B8255A9AD3006945FA /* AuthTokenEntity.swift */; };
-		360D54C7255AA2BB006945FA /* UserDefaults+T.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D54C6255AA2BB006945FA /* UserDefaults+T.swift */; };
 		360D54DC255AB07D006945FA /* DisposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D54DB255AB07D006945FA /* DisposeViewController.swift */; };
 		360D54E0255AB0FD006945FA /* StaticFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D54DF255AB0FD006945FA /* StaticFactory.swift */; };
 		360D54FC255AB2AA006945FA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D54FB255AB2AA006945FA /* LoginViewController.swift */; };
@@ -27,7 +26,6 @@
 		360D5517255AB568006945FA /* RxViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 360D5516255AB568006945FA /* RxViewController */; };
 		360D551A255AB6E9006945FA /* Transitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D5519255AB6E9006945FA /* Transitioning.swift */; };
 		360D551D255ABBAF006945FA /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D551C255ABBAF006945FA /* ActivityIndicator.swift */; };
-		360D5520255ABF09006945FA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D551F255ABF09006945FA /* HTTPClient.swift */; };
 		360D5524255ABFD7006945FA /* RepositoryEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D5523255ABFD7006945FA /* RepositoryEntity.swift */; };
 		360D552B255AC038006945FA /* OwnerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D552A255AC038006945FA /* OwnerEntity.swift */; };
 		360D5531255AC111006945FA /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D5530255AC111006945FA /* UserDefaultsStorage.swift */; };
@@ -49,6 +47,14 @@
 		360D5575255B11FF006945FA /* HistoryActionBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D5574255B11FF006945FA /* HistoryActionBinder.swift */; };
 		360D5578255B122E006945FA /* HistoryDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D5577255B122E006945FA /* HistoryDriver.swift */; };
 		360D557F255B20D4006945FA /* RepositoriesSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D557E255B20D4006945FA /* RepositoriesSearchResult.swift */; };
+		360D5590255B383E006945FA /* UIViewController+AlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D558F255B383E006945FA /* UIViewController+AlertAction.swift */; };
+		360D5597255BFB37006945FA /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D5596255BFB37006945FA /* GitHubAPI.swift */; };
+		360D55A0255C0EB9006945FA /* SearchInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D559F255C0EB9006945FA /* SearchInput.swift */; };
+		360D55A3255C10FC006945FA /* UITextField+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D55A2255C10FC006945FA /* UITextField+Style.swift */; };
+		360D55A6255C134D006945FA /* UIView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D55A5255C134D006945FA /* UIView+Utils.swift */; };
+		360D55AB255C18E2006945FA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D55AA255C18E2006945FA /* ErrorModel.swift */; };
+		3628F7B3255C2C9600773D95 /* APIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3628F7B2255C2C9600773D95 /* APIStorage.swift */; };
+		3628F7B7255C2CAA00773D95 /* HistoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3628F7B6255C2CAA00773D95 /* HistoryStorage.swift */; };
 		36E1DD9725599ED400A93210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E1DD9625599ED400A93210 /* AppDelegate.swift */; };
 		36E1DDA025599ED500A93210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36E1DD9F25599ED500A93210 /* Assets.xcassets */; };
 		36E1DDA325599ED500A93210 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36E1DDA125599ED500A93210 /* LaunchScreen.storyboard */; };
@@ -61,7 +67,6 @@
 		360D54B1255A9140006945FA /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		360D54B4255A925A006945FA /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		360D54B8255A9AD3006945FA /* AuthTokenEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenEntity.swift; sourceTree = "<group>"; };
-		360D54C6255AA2BB006945FA /* UserDefaults+T.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+T.swift"; sourceTree = "<group>"; };
 		360D54DB255AB07D006945FA /* DisposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposeViewController.swift; sourceTree = "<group>"; };
 		360D54DF255AB0FD006945FA /* StaticFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticFactory.swift; sourceTree = "<group>"; };
 		360D54FB255AB2AA006945FA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -72,7 +77,6 @@
 		360D550B255AB40B006945FA /* ViewControllerBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBinder.swift; sourceTree = "<group>"; };
 		360D5519255AB6E9006945FA /* Transitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitioning.swift; sourceTree = "<group>"; };
 		360D551C255ABBAF006945FA /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
-		360D551F255ABF09006945FA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		360D5523255ABFD7006945FA /* RepositoryEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryEntity.swift; sourceTree = "<group>"; };
 		360D552A255AC038006945FA /* OwnerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerEntity.swift; sourceTree = "<group>"; };
 		360D5530255AC111006945FA /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
@@ -91,6 +95,14 @@
 		360D5574255B11FF006945FA /* HistoryActionBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryActionBinder.swift; sourceTree = "<group>"; };
 		360D5577255B122E006945FA /* HistoryDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDriver.swift; sourceTree = "<group>"; };
 		360D557E255B20D4006945FA /* RepositoriesSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesSearchResult.swift; sourceTree = "<group>"; };
+		360D558F255B383E006945FA /* UIViewController+AlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AlertAction.swift"; sourceTree = "<group>"; };
+		360D5596255BFB37006945FA /* GitHubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
+		360D559F255C0EB9006945FA /* SearchInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInput.swift; sourceTree = "<group>"; };
+		360D55A2255C10FC006945FA /* UITextField+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Style.swift"; sourceTree = "<group>"; };
+		360D55A5255C134D006945FA /* UIView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Utils.swift"; sourceTree = "<group>"; };
+		360D55AA255C18E2006945FA /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		3628F7B2255C2C9600773D95 /* APIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStorage.swift; sourceTree = "<group>"; };
+		3628F7B6255C2CAA00773D95 /* HistoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStorage.swift; sourceTree = "<group>"; };
 		36E1DD9325599ED400A93210 /* HeadwayTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeadwayTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36E1DD9625599ED400A93210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36E1DD9F25599ED500A93210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,8 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				360D547C255A10E1006945FA /* Networking */,
+				3628F7B1255C2C7400773D95 /* UserDefaults */,
 				360D5475255A106B006945FA /* StartService.swift */,
-				360D5530255AC111006945FA /* UserDefaultsStorage.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -129,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				360D5484255A1199006945FA /* GitHubAPIService.swift */,
-				360D551F255ABF09006945FA /* HTTPClient.swift */,
+				360D5596255BFB37006945FA /* GitHubAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -137,6 +149,7 @@
 		360D5490255A14D4006945FA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				360D55A9255C18D3006945FA /* AppModels */,
 				360D54BB255A9AD7006945FA /* Entities */,
 				360D5491255A14DD006945FA /* Input */,
 			);
@@ -147,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				360D5492255A14EA006945FA /* UserInput.swift */,
+				360D559F255C0EB9006945FA /* SearchInput.swift */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -219,7 +233,9 @@
 			isa = PBXGroup;
 			children = (
 				360D555C255ACBE2006945FA /* NSObject+ClassName.swift */,
-				360D54C6255AA2BB006945FA /* UserDefaults+T.swift */,
+				360D558F255B383E006945FA /* UIViewController+AlertAction.swift */,
+				360D55A2255C10FC006945FA /* UITextField+Style.swift */,
+				360D55A5255C134D006945FA /* UIView+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,6 +249,24 @@
 				360D5577255B122E006945FA /* HistoryDriver.swift */,
 			);
 			path = HistoryModule;
+			sourceTree = "<group>";
+		};
+		360D55A9255C18D3006945FA /* AppModels */ = {
+			isa = PBXGroup;
+			children = (
+				360D55AA255C18E2006945FA /* ErrorModel.swift */,
+			);
+			path = AppModels;
+			sourceTree = "<group>";
+		};
+		3628F7B1255C2C7400773D95 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				360D5530255AC111006945FA /* UserDefaultsStorage.swift */,
+				3628F7B2255C2C9600773D95 /* APIStorage.swift */,
+				3628F7B6255C2CAA00773D95 /* HistoryStorage.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 		36E1DD8A25599ED400A93210 = {
@@ -401,11 +435,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				360D552B255AC038006945FA /* OwnerEntity.swift in Sources */,
+				3628F7B7255C2CAA00773D95 /* HistoryStorage.swift in Sources */,
 				360D54DC255AB07D006945FA /* DisposeViewController.swift in Sources */,
 				360D5554255AC98D006945FA /* SearchResultItemTableViewCell.swift in Sources */,
 				360D550C255AB40B006945FA /* ViewControllerBinder.swift in Sources */,
-				360D5520255ABF09006945FA /* HTTPClient.swift in Sources */,
 				360D554C255AC82D006945FA /* SearchResultItem.swift in Sources */,
+				360D55AB255C18E2006945FA /* ErrorModel.swift in Sources */,
 				360D557F255B20D4006945FA /* RepositoriesSearchResult.swift in Sources */,
 				360D5508255AB3D5006945FA /* NavigationBinder.swift in Sources */,
 				360D5544255AC63F006945FA /* SearchActionBinder.swift in Sources */,
@@ -414,12 +449,13 @@
 				360D5524255ABFD7006945FA /* RepositoryEntity.swift in Sources */,
 				360D555D255ACBE2006945FA /* NSObject+ClassName.swift in Sources */,
 				360D553B255AC52C006945FA /* SearchViewController.swift in Sources */,
-				360D54C7255AA2BB006945FA /* UserDefaults+T.swift in Sources */,
 				360D5558255ACBAA006945FA /* CellConfiguratorProtocol.swift in Sources */,
 				360D5505255AB31B006945FA /* LoginDriver.swift in Sources */,
 				360D54FF255AB2EA006945FA /* LoginStateBinder.swift in Sources */,
 				360D553E255AC618006945FA /* SearchStateBinder.swift in Sources */,
+				360D55A3255C10FC006945FA /* UITextField+Style.swift in Sources */,
 				360D54E0255AB0FD006945FA /* StaticFactory.swift in Sources */,
+				360D5597255BFB37006945FA /* GitHubAPI.swift in Sources */,
 				360D556E255B10F3006945FA /* HistoryViewController.swift in Sources */,
 				360D551D255ABBAF006945FA /* ActivityIndicator.swift in Sources */,
 				360D54B2255A9140006945FA /* Storyboarded.swift in Sources */,
@@ -427,11 +463,15 @@
 				360D5578255B122E006945FA /* HistoryDriver.swift in Sources */,
 				360D5537255AC1DA006945FA /* ObservableConvertibleType.swift in Sources */,
 				360D5485255A1199006945FA /* GitHubAPIService.swift in Sources */,
+				360D55A0255C0EB9006945FA /* SearchInput.swift in Sources */,
 				360D54FC255AB2AA006945FA /* LoginViewController.swift in Sources */,
 				360D5575255B11FF006945FA /* HistoryActionBinder.swift in Sources */,
 				36E1DD9725599ED400A93210 /* AppDelegate.swift in Sources */,
 				360D5493255A14EA006945FA /* UserInput.swift in Sources */,
 				360D5572255B11B9006945FA /* HistoryStateBinder.swift in Sources */,
+				3628F7B3255C2C9600773D95 /* APIStorage.swift in Sources */,
+				360D55A6255C134D006945FA /* UIView+Utils.swift in Sources */,
+				360D5590255B383E006945FA /* UIViewController+AlertAction.swift in Sources */,
 				360D5531255AC111006945FA /* UserDefaultsStorage.swift in Sources */,
 				360D5541255AC62D006945FA /* SearchDriver.swift in Sources */,
 				360D5502255AB304006945FA /* LoginActionBinder.swift in Sources */,
@@ -503,7 +543,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -558,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -576,6 +616,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J2FU8V9J87;
 				INFOPLIST_FILE = HeadwayTest/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -583,7 +624,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pkseniia.HeadwayTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -595,6 +636,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J2FU8V9J87;
 				INFOPLIST_FILE = HeadwayTest/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -602,7 +644,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pkseniia.HeadwayTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

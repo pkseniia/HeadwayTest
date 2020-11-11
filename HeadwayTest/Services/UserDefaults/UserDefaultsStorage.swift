@@ -7,46 +7,27 @@
 
 import Foundation
 
-protocol DefaultsKey {
-    var rawStringValue: String { get }
-}
+typealias Storages = APIStorage & HistoryStorage
 
-protocol SaveDataProtocol {
-    func saveData<Data>(_ data: Data, key: StorageKey) throws where Data: Encodable
-    func getData<Data>(key: StorageKey, castTo type: Data.Type) throws -> Data where Data: Decodable
-}
-
-protocol SaveTokenProtocol {
-    func saveToken(_ token: String, key: StorageKey)
-    func getToken(key: StorageKey) -> String?
-}
-
-enum StorageKey: String, DefaultsKey {
-    case history
-    case token
-}
-
-protocol UserDefaultsStorageProtocol: SaveDataProtocol, SaveTokenProtocol {}
-
-enum UserDefaultsError: String, LocalizedError {
-    case encodeError = "Encode error"
-    case noData = "No data found"
-    case decodeError = "Decode error"
-    
-    var errorDescription: String? {
-        rawValue
-    }
-}
-
-class UserDefaultsStorage: UserDefaultsStorageProtocol {
+class UserDefaultsStorage {
     
     let defaults: UserDefaults
+    
+    enum UserDefaultsError: String, LocalizedError {
+        case encodeError = "Encode error"
+        case noData = "No data found"
+        case decodeError = "Decode error"
+        
+        var errorDescription: String? {
+            rawValue
+        }
+    }
     
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
     }
     
-    func save<Value>(value: Value?, key: StorageKey) {
+    func save<Value>(value: Value?, key: DefaultsKey) {
         if let value = value {
             defaults.setValue(value, forKey: key.rawStringValue)
         } else {
@@ -54,13 +35,12 @@ class UserDefaultsStorage: UserDefaultsStorageProtocol {
         }
     }
     
-    func get<Value>(key: StorageKey) -> Value? {
+    func get<Value>(key: DefaultsKey) -> Value? {
         guard let value = defaults.value(forKey: key.rawStringValue) as? Value else { return nil }
         return value
     }
     
-    
-    func saveData<Data>(_ data: Data, key: StorageKey) throws where Data: Encodable {
+    func saveData<Data>(_ data: Data, key: DefaultsKey) throws where Data: Encodable {
         let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(data)
@@ -70,7 +50,7 @@ class UserDefaultsStorage: UserDefaultsStorageProtocol {
         }
     }
     
-    func getData<Data>(key: StorageKey, castTo type: Data.Type) throws -> Data where Data: Decodable {
+    func getData<Data>(key: DefaultsKey, castTo type: Data.Type) throws -> Data where Data: Decodable {
         guard let data = UserDefaults.standard.data(forKey: key.rawStringValue) else {
             throw UserDefaultsError.noData
         }
@@ -83,23 +63,19 @@ class UserDefaultsStorage: UserDefaultsStorageProtocol {
         }
     }
     
-    func saveToken(_ token: String, key: StorageKey) {
-        UserDefaults.standard.set(token, forKey: key.rawValue)
+    func deleteData(for key: DefaultsKey) {
+        defaults.removeObject(forKey: key.rawStringValue)
     }
-    
-    func getToken(key: StorageKey) -> String? {
-        return UserDefaults.standard.string(forKey: key.rawValue)
-    }
+}
+
+protocol DefaultsKey {
+    var rawStringValue: String { get }
 }
 
 extension String: DefaultsKey {
-    
     var rawStringValue: String { self }
-    
 }
 
 extension RawRepresentable where RawValue == String {
-
     var rawStringValue: String { rawValue }
-
 }

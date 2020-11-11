@@ -12,8 +12,10 @@ import RxSwiftExt
 enum SearchState {
     case none
     case loading
+    case pagination
     case searchResults([SearchResultItem])
     case showWatchedRepos([SearchResultItem]?)
+    case failure(Error?)
 }
 
 protocol SearchDriverProtocol {
@@ -24,6 +26,7 @@ protocol SearchDriverProtocol {
     func search(_ query: String)
     func save(repositories: [SearchResultItem])
     func showWatchedRepos()
+    func addPage()
 }
 
 final class SearchDriver: SearchDriverProtocol {
@@ -46,8 +49,11 @@ final class SearchDriver: SearchDriverProtocol {
     var state: Driver<SearchState> { stateRelay.asDriver() }
     var didSelect: Driver<SearchResultItem> { didSelectRelay.unwrap().asDriver() }
     
+    var savedQuery: String = ""
+    var page: Int = 1
+    
     private let api: GitHubAPIRepositoryProvider
-    private let storage: UserDefaultsStorageProtocol
+    private let storage: HistoryStorage
     
     init(api: GitHubAPIRepositoryProvider) {
         self.api = api
@@ -55,36 +61,64 @@ final class SearchDriver: SearchDriverProtocol {
         bind()
     }
     
+    func addPage() {
+        page += 2
+        search(savedQuery)
+    }
+    
     func select(_ model: SearchResultItem) {
         didSelectRelay.accept(model)
     }
-    
+
     func search(_ query: String) {
         let isValid = query.count >= 3
+
+        guard isValid else {
+            page = 1
+            return
+        }
+        if savedQuery != query {
+            page = 1
+            self.savedQuery = query
+        }
         
-        guard isValid else { return }
-        
-        let searchResult: Observable<[SearchResultItem]>
-        
-        searchResult = api.searchRepositories(for: query, page: 0)
-            .map({ $0 ?? [] })
-            .mapMany(SearchResultItem.init)
-        
-        searchResult
+        let part1 = getSearchResult(query, page)
+            .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
+        let part2 = getSearchResult(query, page + 1)
+            .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
+
+        let result = Observable.zip(part1, part2) { return $0 + $1 }
+            .map({ $0 })
+
+        result
             .trackActivity(activityIndicator)
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind(onNext: { [unowned self] in self[keyPath: \.searchResults] = $0 })
+            .subscribe(onNext: { [unowned self] in self.saveResults($0) },
+                       onError: { [weak self] in self?.stateRelay.accept(.failure($0)) })
             .disposed(by: bag)
+    }
+
+    private func getSearchResult(_ query: String, _ page: Int) -> Observable<[SearchResultItem]> {
+        api.searchRepositories(for: query, page: page)
+            .map({ $0 ?? [] })
+            .mapMany(SearchResultItem.init)
+    }
+    
+    private func saveResults(_ results: [SearchResultItem]) {
+        if page == 1 {
+            self.searchResults = results
+        } else {
+            self.searchResults?.append(contentsOf: results)
+        }
     }
     
     
     func save(repositories: [SearchResultItem]) {
-        try? storage.saveData(repositories, key: .history)
+        try? storage.saveData(repositories)
     }
     
     func showWatchedRepos() {
-        let repositories = try? storage.getData(key: .history,
-                                                  castTo: [SearchResultItem].self)
+        let repositories = try? storage.getData(castTo: [SearchResultItem].self)
         stateRelay.accept(.showWatchedRepos(repositories))
     }
     

@@ -8,9 +8,18 @@
 import RxSwift
 import RxCocoa
 
-enum LoginViewState {
+enum LoginViewState: Equatable {
+    static func == (lhs: LoginViewState, rhs: LoginViewState) -> Bool {
+        switch (lhs, rhs) {
+        case (.success, .success), (.failure, .failure), (.loading, .loading), (.disabled, .disabled), (.enabled, .enabled):
+            return true
+        default:
+            return false
+        }
+    }
+    
     case success
-    case failure
+    case failure(Error?)
     case loading
     case disabled
     case enabled
@@ -28,6 +37,7 @@ final class LoginDriver: LoginDriverProtocol {
     private let stateRelay = PublishRelay<LoginViewState>()
     
     private let api: GitHubAPIProvider
+    private let storage: Storages
     
     let bag = DisposeBag()
     
@@ -46,19 +56,24 @@ final class LoginDriver: LoginDriverProtocol {
     
     init(api: GitHubAPIProvider) {
         self.api = api
+        self.storage = UserDefaultsStorage()
         bind()
     }
     
     func login() {
         api.login(username: userName, password: password)
             .trackActivity(activityIndicator)
-            .map({ $0 ? .success : .failure })
-//            .catchError({ error in }) 🐰
-            .bind(onNext: stateRelay.accept)
+            .map({ $0 ? .success : .failure(nil) })
+            .subscribe(onNext: stateRelay.accept,
+                       onError: { [weak self] in self?.stateRelay.accept(.failure($0)) })
             .disposed(by: bag)
     }
     
     private func bind() {
+        
+        storage.token = nil
+        storage.deleteData()
+        
         activityIndicator
             .filter({ $0 })
             .map({ _ in LoginViewState.loading })

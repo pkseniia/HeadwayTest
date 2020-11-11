@@ -16,9 +16,7 @@ final class SearchViewController: DisposeViewController, Storyboarded {
     
     private var dataSource: [SearchResultItem] = []
     private var selectedRepos = [SearchResultItem]() {
-        didSet {
-            tableView.reloadData()
-        }
+        didSet { tableView.reloadData() }
     }
     
     private let selectedIndexSubject = PublishSubject<SearchResultItem>()
@@ -61,27 +59,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func setDataSource(_ dataSource: [SearchResultItem]) {
         self.dataSource = dataSource
         tableView.reloadData()
-        // 🐰
-//        self.dataSource.removeAll()
-//        let part1 = PublishSubject<[SearchResultItem]>()
-//        let part2 = PublishSubject<[SearchResultItem]>()
-//        let concurrentScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
-//        Observable.of(part1,part2)
-//                  .observeOn(concurrentScheduler)
-//                  .merge()
-//                  .subscribeOn(MainScheduler())
-//                    .subscribe(onNext:{ [weak self] in
-//                        self?.dataSource.append(contentsOf: $0)
-//                        self?.tableView.reloadData()
-//                    })
-//            .disposed(by: bag)
-//        let customDataSource = dataSource
-//        if customDataSource.count > 15 {
-//            part1.onNext(Array(customDataSource.dropFirst(15)))
-//            part2.onNext(customDataSource)
-//        } else {
-//            part1.onNext(customDataSource)
-//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -106,9 +83,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == dataSource.count - 1 {
-            // pagination 🐰
-        }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true)
     }
 }

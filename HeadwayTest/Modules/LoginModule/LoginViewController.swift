@@ -24,6 +24,7 @@ extension LoginViewController: StaticFactory {
             let actionBinder = LoginActionBinder(viewController: viewController, driver: driver)
             
             let toMainDriver = driver.state.compactMap({ $0 == .success ? () : nil })
+
             let navigationBinder = DismissBinder<LoginViewController>.Factory
                 .dismiss(viewController: viewController, driver: toMainDriver)
 

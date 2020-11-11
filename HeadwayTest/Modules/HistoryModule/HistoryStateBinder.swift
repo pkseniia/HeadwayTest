@@ -37,6 +37,8 @@ final class HistoryStateBinder: ViewControllerBinder {
     }
     
     private func configure(_ repositories: [SearchResultItem]) {
-        viewController.setDataSource(repositories)
+        let lastTwentyRepositories = repositories.suffix(20)
+            .reversed()
+        viewController.setDataSource(Array(lastTwentyRepositories))
     }
 }

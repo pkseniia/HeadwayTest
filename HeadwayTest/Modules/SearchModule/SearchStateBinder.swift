@@ -31,13 +31,16 @@ final class SearchStateBinder: ViewControllerBinder {
             viewController.rx.viewWillAppear
                 .bind(onNext: { [weak self] in self?.viewWillAppear($0) }),
             driver.state
-                .drive(onNext: { [weak self] in self?.apply(state: $0) })
+                .drive(onNext: { [weak self] in self?.apply(state: $0) }),
+            viewController.tableView.rx.reachedBottom()
+                .bind(onNext: { [weak self] in self?.driver.addPage() })
         )
     }
     
     private func viewWillAppear(_ animated: Bool) {
         viewController.tableView.tableFooterView = UIView()
         viewController.navigationController?.setNavigationBarHidden(true, animated: false)
+        viewController.searchTextField.style(with: "Search")
     }
     
     private func apply(state: SearchState) {
@@ -47,6 +50,13 @@ final class SearchStateBinder: ViewControllerBinder {
         case let .showWatchedRepos(repositories):
             let historyViewController = HistoryViewController.Factory.build(repositories: repositories)
             viewController.present(historyViewController, animated: true, completion: nil)
+        case .failure(let error):
+            let errorModel = ErrorModel(status: .search, error: error)
+            viewController.showAlert(title: errorModel?.title, message: errorModel?.message, style: .alert,
+                                     actions: [AlertAction.action(title: "Ok", style: .destructive)])
+                .subscribe(onNext: { _ in })
+                .disposed(by: bag)
+            viewController.view.endEditing(true)
         default: break
         }
     }

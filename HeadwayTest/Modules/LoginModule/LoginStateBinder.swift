@@ -30,11 +30,32 @@ final class LoginStateBinder: ViewControllerBinder {
     
     private func viewWillAppear(_ animated: Bool) {
         viewController.navigationController?.setNavigationBarHidden(true, animated: animated)
+        viewController.usernameTextField.style(with: "Username or email address")
+        viewController.passwordTextField.style(with: "Password")
+        viewController.loginButton.cornerRadius = viewController.loginButton.frame.height / 2.5
     }
     
     private func applyState(_ state: LoginViewState) {
-        let isEnabled = state != .disabled
+        let isEnabled: Bool
+        let alpha: CGFloat
+        switch state {
+        case .success, .loading, .enabled:
+            isEnabled = true
+            alpha = 1
+        case .disabled:
+            isEnabled = false
+            alpha = 0.3
+        case .failure(let error):
+            isEnabled = true
+            alpha = 1
+            
+            let errorModel = ErrorModel(status: .login, error: error)
+            viewController.showAlert(title: errorModel?.title, message: errorModel?.message, style: .alert,
+                                     actions: [AlertAction.action(title: "Ok", style: .destructive)])
+                .subscribe(onNext: { _ in })
+                .disposed(by: bag)
+        }
         viewController.loginButton.isEnabled = isEnabled
-        viewController.loginButton.alpha = isEnabled ? 1 : 0.3
+        viewController.loginButton.alpha = alpha
     }
 }

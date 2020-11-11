@@ -22,7 +22,6 @@ final class HistoryViewController: DisposeViewController, Storyboarded {
     @IBOutlet private(set) var closeButton: UIButton!
 }
 
-
 extension HistoryViewController: StaticFactory {
     enum Factory {
         static func build(repositories: [SearchResultItem]?) -> HistoryViewController {
