@@ -39,7 +39,6 @@ final class HistoryDriver: HistoryDriverProtocol {
     }
 }
 
-
 extension HistoryDriver: StaticFactory {
     enum Factory {
         static func build(repositories: [SearchResultItem]?) -> HistoryDriverProtocol {

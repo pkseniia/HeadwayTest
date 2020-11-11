@@ -17,15 +17,15 @@ enum ErrorStatus {
     
     var message: String {
         switch self {
-        case .login: return "Wrong credentials"
-        case .search: return "My bad 🥺"
+        case .login:    return AppConstants.Errors.wrongCredentials
+        case .search:   return AppConstants.Errors.mayBad
         }
     }
 }
 
 struct ErrorModel: Error {
 
-    var title: String = "Error"
+    var title: String = AppConstants.Errors.error
     var message: String
 }
 
@@ -33,9 +33,9 @@ extension ErrorModel: ErrorCreatable {
     init?(status: ErrorStatus, error: Error? = nil) {
         if let error = error as NSError? {
             self.message = error.code == -1009 ?
-                "You are not connected to internet" : status.message
+                AppConstants.Errors.noInternet : status.message
         } else {
-            self.message = "Ooops.. Try again, please"
+            self.message = AppConstants.Errors.oops
         }
     }
 }

@@ -9,4 +9,8 @@ import Foundation
 
 struct AuthTokenEntity: Decodable {
     let token: String?
+    
+    init(parameters: [String: Any]) {
+        self.token = parameters["access_token"] as? String
+    }
 }

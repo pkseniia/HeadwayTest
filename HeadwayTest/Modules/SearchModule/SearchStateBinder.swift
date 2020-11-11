@@ -40,7 +40,7 @@ final class SearchStateBinder: ViewControllerBinder {
     private func viewWillAppear(_ animated: Bool) {
         viewController.tableView.tableFooterView = UIView()
         viewController.navigationController?.setNavigationBarHidden(true, animated: false)
-        viewController.searchTextField.style(with: "Search")
+        viewController.searchTextField.style(with: AppConstants.Search.searchPlaceholder)
     }
     
     private func apply(state: SearchState) {
@@ -53,7 +53,7 @@ final class SearchStateBinder: ViewControllerBinder {
         case .failure(let error):
             let errorModel = ErrorModel(status: .search, error: error)
             viewController.showAlert(title: errorModel?.title, message: errorModel?.message, style: .alert,
-                                     actions: [AlertAction.action(title: "Ok", style: .destructive)])
+                                     actions: [AlertAction.action(title: AppConstants.Buttons.ok, style: .destructive)])
                 .subscribe(onNext: { _ in })
                 .disposed(by: bag)
             viewController.view.endEditing(true)

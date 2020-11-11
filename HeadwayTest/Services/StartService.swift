@@ -17,8 +17,10 @@ class StartService {
         window.rootViewController = searchViewController
         window.makeKeyAndVisible()
         
-        let loginViewController = createLoginViewController()
-        searchViewController.present(loginViewController, animated: true, completion: nil)
+        if !Date().checkIfGitHubAPIDeprecated() {
+            let loginViewController = createLoginViewController()
+            searchViewController.present(loginViewController, animated: true, completion: nil)
+        }
     }
     
     private func createLoginViewController() -> UIViewController {

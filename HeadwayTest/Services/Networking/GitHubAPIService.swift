@@ -47,7 +47,7 @@ final class GitHubAPIService: GitHubAPIProvider {
 extension GitHubAPIService: GitHubAPILoginProvider {
     
     func login(username: String, password: String) -> Observable<Bool> {
-        let api: GitHubAPI = .login(model: UserInput(name: username, pass: password))
+        let api: GitHubAPI = .deprecatedLogin(model: UserInput(name: username, pass: password))
         
         return performRequest(api: api)
             .map { (data) -> Bool in
@@ -68,7 +68,12 @@ extension GitHubAPIService: GitHubAPIRepositoryProvider {
     
     func searchRepositories(for query: String, page: Int) -> Observable<[RepositoryEntity]?> {
         guard let token = storage.token else { return .empty() }
-        let api: GitHubAPI = .search(model: SearchInput(query: query, page: page, token: token))
+        
+        let input = SearchInput(query: query, page: page, token: token)
+        let api: GitHubAPI = Date().checkIfGitHubAPIDeprecated() ?
+            .search(model: input) :
+            .deprecatedSearch(model: input)
+        
         return performRequest(api: api)
             .map { (data) -> [RepositoryEntity]? in
                 guard let data = data,

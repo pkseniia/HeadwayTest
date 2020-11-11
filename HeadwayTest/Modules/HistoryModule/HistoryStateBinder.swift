@@ -30,6 +30,7 @@ final class HistoryStateBinder: ViewControllerBinder {
             driver.data
                 .drive(onNext: { [weak self] in self?.configure($0) })
         )
+        viewController.closeButton.setTitle(AppConstants.History.close, for: .normal)
     }
     
     private func viewWillAppear(_ animated: Bool) {

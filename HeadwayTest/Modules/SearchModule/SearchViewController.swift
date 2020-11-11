@@ -14,6 +14,8 @@ final class SearchViewController: DisposeViewController, Storyboarded {
     @IBOutlet private(set) var tableView: UITableView!
     @IBOutlet private(set) var historyButton: UIButton!
     
+    private var oAuthService: OAuthServiceProtocol?
+    
     private var dataSource: [SearchResultItem] = []
     private var selectedRepos = [SearchResultItem]() {
         didSet { tableView.reloadData() }
@@ -28,6 +30,14 @@ final class SearchViewController: DisposeViewController, Storyboarded {
     
     var selectedIndexes: Observable<[SearchResultItem]> {
         return selectedIndexesSubject.asObservable()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if Date().checkIfGitHubAPIDeprecated() {
+            oAuthService = OAuthService(viewController: self)
+            oAuthService?.loadOAuth()
+        }
     }
 }
 

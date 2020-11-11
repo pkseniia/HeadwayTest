@@ -55,6 +55,10 @@
 		360D55AB255C18E2006945FA /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360D55AA255C18E2006945FA /* ErrorModel.swift */; };
 		3628F7B3255C2C9600773D95 /* APIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3628F7B2255C2C9600773D95 /* APIStorage.swift */; };
 		3628F7B7255C2CAA00773D95 /* HistoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3628F7B6255C2CAA00773D95 /* HistoryStorage.swift */; };
+		3628F81D255C653E00773D95 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3628F81C255C653E00773D95 /* AppConstants.swift */; };
+		3628F820255C665500773D95 /* OAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3628F81F255C665500773D95 /* OAuthService.swift */; };
+		3628F839255C6DFA00773D95 /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3628F838255C6DFA00773D95 /* OAuthSwift */; };
+		3628F83C255C6F8A00773D95 /* Date+Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3628F83B255C6F8A00773D95 /* Date+Current.swift */; };
 		36E1DD9725599ED400A93210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E1DD9625599ED400A93210 /* AppDelegate.swift */; };
 		36E1DDA025599ED500A93210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36E1DD9F25599ED500A93210 /* Assets.xcassets */; };
 		36E1DDA325599ED500A93210 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36E1DDA125599ED500A93210 /* LaunchScreen.storyboard */; };
@@ -103,6 +107,11 @@
 		360D55AA255C18E2006945FA /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
 		3628F7B2255C2C9600773D95 /* APIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStorage.swift; sourceTree = "<group>"; };
 		3628F7B6255C2CAA00773D95 /* HistoryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStorage.swift; sourceTree = "<group>"; };
+		3628F81C255C653E00773D95 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		3628F81F255C665500773D95 /* OAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthService.swift; sourceTree = "<group>"; };
+		3628F827255C6CAF00773D95 /* OAuthRxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OAuthRxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3628F830255C6D5900773D95 /* OAuthRxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = OAuthRxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3628F83B255C6F8A00773D95 /* Date+Current.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Current.swift"; sourceTree = "<group>"; };
 		36E1DD9325599ED400A93210 /* HeadwayTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeadwayTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36E1DD9625599ED400A93210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36E1DD9F25599ED500A93210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,6 +128,7 @@
 				360D5548255AC7C1006945FA /* RxDataSources in Frameworks */,
 				360D5513255AB450006945FA /* RxCocoa in Frameworks */,
 				360D5565255AD260006945FA /* Nuke in Frameworks */,
+				3628F839255C6DFA00773D95 /* OAuthSwift in Frameworks */,
 				360D5550255AC8B9006945FA /* RxSwiftExt in Frameworks */,
 				360D5511255AB450006945FA /* RxSwift in Frameworks */,
 			);
@@ -133,6 +143,7 @@
 				360D547C255A10E1006945FA /* Networking */,
 				3628F7B1255C2C7400773D95 /* UserDefaults */,
 				360D5475255A106B006945FA /* StartService.swift */,
+				3628F81F255C665500773D95 /* OAuthService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -236,6 +247,7 @@
 				360D558F255B383E006945FA /* UIViewController+AlertAction.swift */,
 				360D55A2255C10FC006945FA /* UITextField+Style.swift */,
 				360D55A5255C134D006945FA /* UIView+Utils.swift */,
+				3628F83B255C6F8A00773D95 /* Date+Current.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -269,11 +281,21 @@
 			path = UserDefaults;
 			sourceTree = "<group>";
 		};
+		3628F826255C6CAF00773D95 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3628F830255C6D5900773D95 /* OAuthRxSwift.framework */,
+				3628F827255C6CAF00773D95 /* OAuthRxSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		36E1DD8A25599ED400A93210 = {
 			isa = PBXGroup;
 			children = (
 				36E1DD9525599ED400A93210 /* HeadwayTest */,
 				36E1DD9425599ED400A93210 /* Products */,
+				3628F826255C6CAF00773D95 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -314,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				36E1DD9625599ED400A93210 /* AppDelegate.swift */,
+				3628F81C255C653E00773D95 /* AppConstants.swift */,
 			);
 			path = AppHandling;
 			sourceTree = "<group>";
@@ -371,6 +394,7 @@
 				360D5547255AC7C1006945FA /* RxDataSources */,
 				360D554F255AC8B9006945FA /* RxSwiftExt */,
 				360D5564255AD260006945FA /* Nuke */,
+				3628F838255C6DFA00773D95 /* OAuthSwift */,
 			);
 			productName = HeadwayTest;
 			productReference = 36E1DD9325599ED400A93210 /* HeadwayTest.app */;
@@ -405,6 +429,7 @@
 				360D5546255AC7C1006945FA /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				360D554E255AC8B9006945FA /* XCRemoteSwiftPackageReference "RxSwiftExt" */,
 				360D5563255AD260006945FA /* XCRemoteSwiftPackageReference "Nuke" */,
+				3628F837255C6DFA00773D95 /* XCRemoteSwiftPackageReference "OAuthSwift" */,
 			);
 			productRefGroup = 36E1DD9425599ED400A93210 /* Products */;
 			projectDirPath = "";
@@ -459,6 +484,7 @@
 				360D556E255B10F3006945FA /* HistoryViewController.swift in Sources */,
 				360D551D255ABBAF006945FA /* ActivityIndicator.swift in Sources */,
 				360D54B2255A9140006945FA /* Storyboarded.swift in Sources */,
+				3628F81D255C653E00773D95 /* AppConstants.swift in Sources */,
 				360D5476255A106B006945FA /* StartService.swift in Sources */,
 				360D5578255B122E006945FA /* HistoryDriver.swift in Sources */,
 				360D5537255AC1DA006945FA /* ObservableConvertibleType.swift in Sources */,
@@ -470,6 +496,8 @@
 				360D5493255A14EA006945FA /* UserInput.swift in Sources */,
 				360D5572255B11B9006945FA /* HistoryStateBinder.swift in Sources */,
 				3628F7B3255C2C9600773D95 /* APIStorage.swift in Sources */,
+				3628F83C255C6F8A00773D95 /* Date+Current.swift in Sources */,
+				3628F820255C665500773D95 /* OAuthService.swift in Sources */,
 				360D55A6255C134D006945FA /* UIView+Utils.swift in Sources */,
 				360D5590255B383E006945FA /* UIViewController+AlertAction.swift in Sources */,
 				360D5531255AC111006945FA /* UserDefaultsStorage.swift in Sources */,
@@ -712,6 +740,14 @@
 				minimumVersion = 9.1.2;
 			};
 		};
+		3628F837255C6DFA00773D95 /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -744,6 +780,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 360D5563255AD260006945FA /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = Nuke;
+		};
+		3628F838255C6DFA00773D95 /* OAuthSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3628F837255C6DFA00773D95 /* XCRemoteSwiftPackageReference "OAuthSwift" */;
+			productName = OAuthSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

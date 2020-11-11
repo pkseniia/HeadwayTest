@@ -30,8 +30,9 @@ final class LoginStateBinder: ViewControllerBinder {
     
     private func viewWillAppear(_ animated: Bool) {
         viewController.navigationController?.setNavigationBarHidden(true, animated: animated)
-        viewController.usernameTextField.style(with: "Username or email address")
-        viewController.passwordTextField.style(with: "Password")
+        viewController.usernameTextField.style(with: AppConstants.Login.namePlaceholder)
+        viewController.passwordTextField.style(with: AppConstants.Login.passwordPlaceholder)
+        viewController.loginButton.setTitle(AppConstants.Login.signIn, for: .normal)
         viewController.loginButton.cornerRadius = viewController.loginButton.frame.height / 2.5
     }
     
@@ -51,7 +52,7 @@ final class LoginStateBinder: ViewControllerBinder {
             
             let errorModel = ErrorModel(status: .login, error: error)
             viewController.showAlert(title: errorModel?.title, message: errorModel?.message, style: .alert,
-                                     actions: [AlertAction.action(title: "Ok", style: .destructive)])
+                                     actions: [AlertAction.action(title: AppConstants.Buttons.ok, style: .destructive)])
                 .subscribe(onNext: { _ in })
                 .disposed(by: bag)
         }
