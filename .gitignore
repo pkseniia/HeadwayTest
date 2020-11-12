@@ -80,6 +80,4 @@ iOSInjectionProject/
 
 *.xcuserstate
 .DS_Store
-HeadwayTest.xcodeproj/project.xcworkspace/xcuserdata/kseniiap.xcuserdatad/UserInterfaceState.xcuserstate
-*/xcschemes/xcschememanagement.plist
-*.xcuserstate
+xcuserdata/

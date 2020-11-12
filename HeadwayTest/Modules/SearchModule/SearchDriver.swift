@@ -53,7 +53,7 @@ final class SearchDriver: SearchDriverProtocol {
     var page: Int = 1
     
     private let api: GitHubAPIRepositoryProvider
-    private let storage: HistoryStorage
+    private let storage: Storages
     
     init(api: GitHubAPIRepositoryProvider) {
         self.api = api
@@ -121,6 +121,10 @@ final class SearchDriver: SearchDriverProtocol {
     }
     
     private func bind() {
+        
+        storage.token = nil
+        storage.deleteData()
+        
         activityIndicator
             .filter({ $0 })
             .map({ _ in SearchState.loading })

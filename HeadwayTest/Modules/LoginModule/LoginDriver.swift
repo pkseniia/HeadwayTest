@@ -37,7 +37,6 @@ final class LoginDriver: LoginDriverProtocol {
     private let stateRelay = PublishRelay<LoginViewState>()
     
     private let api: GitHubAPIProvider
-    private let storage: Storages
     
     let bag = DisposeBag()
     
@@ -56,7 +55,6 @@ final class LoginDriver: LoginDriverProtocol {
     
     init(api: GitHubAPIProvider) {
         self.api = api
-        self.storage = UserDefaultsStorage()
         bind()
     }
     
@@ -70,9 +68,6 @@ final class LoginDriver: LoginDriverProtocol {
     }
     
     private func bind() {
-        
-        storage.token = nil
-        storage.deleteData()
         
         activityIndicator
             .filter({ $0 })
