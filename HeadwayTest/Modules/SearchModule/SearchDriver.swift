@@ -71,16 +71,18 @@ final class SearchDriver: SearchDriverProtocol {
     }
 
     func search(_ query: String) {
-        
-        let isValid = query.count >= 3
+        bag = DisposeBag()
+        let isValid = query.count > 2
         
         guard isValid else {
             page = 1
+            stateRelay.accept(.searchResults([]))
             return
         }
         
         if savedQuery != query { page = 1 }
         savedQuery = query
+        
         searchInZip(for: query)
     }
     
@@ -97,10 +99,7 @@ final class SearchDriver: SearchDriverProtocol {
         result
             .trackActivity(activityIndicator)
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .catchError({ error in Observable.empty()
-                                    .do(onCompleted: { [weak self] in self?.stateRelay.accept(.failure(error)) })
-            })
-            .subscribe(onNext: { [unowned self] in self.saveResults($0) })
+            .bind(onNext: { [unowned self] in self.saveResults($0) })
             .disposed(by: bag)
     }
 
@@ -112,13 +111,8 @@ final class SearchDriver: SearchDriverProtocol {
     }
     
     private func saveResults(_ results: [SearchResultItem]) {
-        if page == 1 {
-            self.searchResults = results
-        } else {
-            self.searchResults?.append(contentsOf: results)
-        }
+        page == 1 ? searchResults = results : searchResults?.append(contentsOf: results)
     }
-    
     
     func save(repositories: [SearchResultItem]) {
         try? storage.saveData(repositories)
