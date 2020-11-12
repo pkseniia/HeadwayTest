@@ -93,19 +93,17 @@ final class SearchDriver: SearchDriverProtocol {
             .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
 
         let result = Observable.zip(part1, part2) { return $0 + $1 }
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .map({ $0 })
 
         result
             .trackActivity(activityIndicator)
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(onNext: { [unowned self] in self.saveResults($0) })
             .disposed(by: bag)
     }
 
     private func getSearchResult(_ query: String, _ page: Int) -> Observable<[SearchResultItem]> {
         api.searchRepositories(for: query, page: page)
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .map({ $0 ?? [] })
             .mapMany(SearchResultItem.init)
     }
