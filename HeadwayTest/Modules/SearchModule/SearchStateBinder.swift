@@ -56,6 +56,8 @@ final class SearchStateBinder: ViewControllerBinder {
                                      actions: [AlertAction.action(title: AppConstants.Buttons.ok, style: .destructive)])
                 .subscribe(onNext: { _ in })
                 .disposed(by: bag)
+            
+            viewController.searchTextField.resignFirstResponder()
             viewController.view.endEditing(true)
         default: break
         }

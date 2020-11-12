@@ -63,7 +63,7 @@ final class SearchDriver: SearchDriverProtocol {
     
     func addPage() {
         page += 2
-        search(savedQuery)
+        searchInZip(for: savedQuery)
     }
     
     func select(_ model: SearchResultItem) {
@@ -71,35 +71,42 @@ final class SearchDriver: SearchDriverProtocol {
     }
 
     func search(_ query: String) {
+        
         let isValid = query.count >= 3
-
+        
         guard isValid else {
             page = 1
             return
         }
-        if savedQuery != query {
-            page = 1
-            self.savedQuery = query
-        }
         
+        if savedQuery != query { page = 1 }
+        savedQuery = query
+        searchInZip(for: query)
+    }
+    
+    private func searchInZip(for query: String) {
         let part1 = getSearchResult(query, page)
             .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
         let part2 = getSearchResult(query, page + 1)
             .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
 
         let result = Observable.zip(part1, part2) { return $0 + $1 }
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .map({ $0 })
 
         result
             .trackActivity(activityIndicator)
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [unowned self] in self.saveResults($0) },
-                       onError: { [weak self] in self?.stateRelay.accept(.failure($0)) })
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .catchError({ error in Observable.empty()
+                                    .do(onCompleted: { [weak self] in self?.stateRelay.accept(.failure(error)) })
+            })
+            .subscribe(onNext: { [unowned self] in self.saveResults($0) })
             .disposed(by: bag)
     }
 
     private func getSearchResult(_ query: String, _ page: Int) -> Observable<[SearchResultItem]> {
         api.searchRepositories(for: query, page: page)
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .map({ $0 ?? [] })
             .mapMany(SearchResultItem.init)
     }
