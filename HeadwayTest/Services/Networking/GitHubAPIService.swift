@@ -85,7 +85,9 @@ extension GitHubAPIService: GitHubAPIRepositoryProvider {
             .map { (repositories) -> [RepositoryEntity]? in
                 return repositories
             }
-            .catchErrorJustReturn(nil)
+            .catchError { (error) in
+                throw error
+            }
     }
 }
 

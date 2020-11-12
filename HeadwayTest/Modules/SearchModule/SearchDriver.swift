@@ -53,7 +53,7 @@ final class SearchDriver: SearchDriverProtocol {
     var page: Int = 1
     
     private let api: GitHubAPIRepositoryProvider
-    private let storage: HistoryStorage
+    private let storage: Storages
     
     init(api: GitHubAPIRepositoryProvider) {
         self.api = api
@@ -63,7 +63,7 @@ final class SearchDriver: SearchDriverProtocol {
     
     func addPage() {
         page += 2
-        searchInZip(for: savedQuery)
+        search(savedQuery)
     }
     
     func select(_ model: SearchResultItem) {
@@ -84,9 +84,16 @@ final class SearchDriver: SearchDriverProtocol {
         savedQuery = query
         
         searchInZip(for: query)
+            .trackActivity(activityIndicator)
+            .catchError({ error in Observable.empty()
+                                    .do(onCompleted: { [weak self] in self?.stateRelay.accept(.failure(error)) })
+            })
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(onNext: { [unowned self] in self.saveResults($0) })
+            .disposed(by: bag)
     }
     
-    private func searchInZip(for query: String) {
+    private func searchInZip(for query: String) -> Observable<[SearchResultItem]> {
         let part1 = getSearchResult(query, page)
             .subscribeOn(ConcurrentDispatchQueueScheduler.init(qos: .utility))
         let part2 = getSearchResult(query, page + 1)
@@ -94,12 +101,7 @@ final class SearchDriver: SearchDriverProtocol {
 
         let result = Observable.zip(part1, part2) { return $0 + $1 }
             .map({ $0 })
-
-        result
-            .trackActivity(activityIndicator)
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind(onNext: { [unowned self] in self.saveResults($0) })
-            .disposed(by: bag)
+        return result
     }
 
     private func getSearchResult(_ query: String, _ page: Int) -> Observable<[SearchResultItem]> {
@@ -122,6 +124,10 @@ final class SearchDriver: SearchDriverProtocol {
     }
     
     private func bind() {
+        
+        storage.token = nil
+        storage.deleteData()
+        
         activityIndicator
             .filter({ $0 })
             .map({ _ in SearchState.loading })
