@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 final class SearchActionBinder: ViewControllerBinder {
     unowned let viewController: SearchViewController
@@ -29,6 +31,7 @@ final class SearchActionBinder: ViewControllerBinder {
             .asDriver(onError: [SearchResultItem()])
         
         let query = viewController.searchTextField.rx.text.orEmpty
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
         
         viewController.bag.insert(
             select

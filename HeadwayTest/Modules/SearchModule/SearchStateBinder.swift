@@ -54,11 +54,12 @@ final class SearchStateBinder: ViewControllerBinder {
             let errorModel = ErrorModel(status: .search, error: error)
             viewController.showAlert(title: errorModel?.title, message: errorModel?.message, style: .alert,
                                      actions: [AlertAction.action(title: AppConstants.Buttons.ok, style: .destructive)])
-                .subscribe(onNext: { _ in })
+                .subscribe(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.viewController.searchTextField.resignFirstResponder()
+                    self.viewController.view.endEditing(true)
+                })
                 .disposed(by: bag)
-            
-            viewController.searchTextField.resignFirstResponder()
-            viewController.view.endEditing(true)
         default: break
         }
     }

@@ -85,6 +85,9 @@ final class SearchDriver: SearchDriverProtocol {
         
         searchInZip(for: query)
             .trackActivity(activityIndicator)
+            .catchError({ error in Observable.empty()
+                                    .do(onCompleted: { [weak self] in self?.stateRelay.accept(.failure(error)) })
+            })
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind(onNext: { [unowned self] in self.saveResults($0) })
             .disposed(by: bag)
